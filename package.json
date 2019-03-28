@@ -1,0 +1,24 @@
+{
+  "name": "qr-attendance",
+  "version": "1.0.0",
+  "description": "mark attendance using QR code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ckhoon/qr-attendance.git"
+  },
+  "author": "ckhoon@tp.edu.sg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ckhoon/qr-attendance/issues"
+  },
+  "homepage": "https://github.com/ckhoon/qr-attendance#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "qrcode-generator": "^1.4.3"
+  }
+}
