@@ -2,6 +2,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var crypto_qr = require('./crypto-qr')
 
 var app = express();
 
@@ -30,9 +31,13 @@ app.get('/', function(req, res)
 var server_port = process.env.PORT || 3000;
 app.listen(server_port, function()
 {
-  console.log('Listening on port %d', server_port)
+  console.log('Listening on port %d', server_port);
 });
 
-
+//Other functions
+var en = crypto_qr.encrypt("abc");
+var de = crypto_qr.decrypt(en);
+console.log(en);
+console.log(de);
 
 
