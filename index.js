@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var crypto_qr = require('./crypto-qr')
+const MongoClient = require('mongodb').MongoClient
 
 var app = express();
 
@@ -35,9 +36,19 @@ app.listen(server_port, function()
 });
 
 //Other functions
-var en = crypto_qr.encrypt("abc");
-var de = crypto_qr.decrypt(en);
-console.log(en);
-console.log(de);
+
+var db
+var db_uri = process.env.MONGODB_URI || "mongodb://heroku_gxqkhrvd:1q1q1q!Q@ds147274.mlab.com:47274/heroku_gxqkhrvd";
+console.log(db_uri);
+MongoClient.connect(db_uri, (err, client) => {
+  if (err) return console.log(err)
+  db = client.db('heroku_gxqkhrvd') // whatever your database name is
+})
+
+
+//var en = crypto_qr.encrypt("abc");
+//var de = crypto_qr.decrypt(en);
+//console.log(en);
+//console.log(de);
 
 
