@@ -4,9 +4,8 @@ html
     //link(rel='stylesheet', type='text/css', href='slick.css')
     //link(rel='stylesheet', type='text/css', href='slick-theme.css')
   body
-    script(type='text/javascript', src='https://code.jquery.com/jquery-1.11.0.min.js')
-    script(type='text/javascript', src='https://code.jquery.com/jquery-migrate-1.2.1.min.js')
-    script(type="text/javascript" src="qrcode.js")
+    script(type='text/javascript', src='https://code.jquery.com/jquery-3.3.1.min.js')
+    script(type="text/javascript" src="js/qrcode.js")
     |Hello World
     div(id='qr')
     div(id='x')
@@ -15,7 +14,7 @@ html
         var qr = qrcode(4, 'L');
         qr.addData("test");
         qr.make();
-        $('#qr').html(qr.createSvgTag({ cellSize: 4, margin: 0, xscalable: true }));
+        $('#qr').html(qr.createSvgTag({ cellSize: 5, margin: 0, xscalable: true }));
         //$('#qr').html("hello again");
         console.log($('qr').html);
         getLocation();

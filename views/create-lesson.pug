@@ -1,0 +1,30 @@
+doctype html
+head
+    title Create Lesson
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='icon' type='image/png' href='images/icons/favicon.ico')
+    //link(rel='stylesheet', type='text/css' href='css/bootstrap.min.css')
+    //link(rel='stylesheet', type='text/css' href='css/animate.css')
+    //link(rel='stylesheet', type='text/css' href='css/hamburgers.min.css')
+    //link(rel='stylesheet', type='text/css' href='css/select2.min.css')
+    link(rel='stylesheet', type='text/css' href='css/util.css')
+    link(rel='stylesheet', type='text/css' href='css/main.css')
+    link(rel='stylesheet', type='text/css' href='/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+body
+    .bg-create-lesson(style="background-image: url('images/tpBkGrd.jpg');")
+      .container-create-lesson
+        .wrap-create-lesson
+          form.create-lesson-form.validate-form(action='/create-lesson', method='POST')
+            span.create-lesson-form-title
+              | Lesson Details
+            .wrap-input3.validate-input(data-validate='Name is required')
+              input.input3(type='text' name='name' placeholder='Lesson name (must be unqiue)')
+              span.focus-input3
+            .container-create-lesson-form-btn
+              button.create-lesson-form-btn
+                | Submit
+    script(type='text/javascript', src='js/jquery-3.2.1.min.js')
+    script(type='text/javascript', src='js/popper.js')
+    script(type='text/javascript', src='js/bootstrap.min.js')
+    script(type='text/javascript', src='js/create-lesson.js')
