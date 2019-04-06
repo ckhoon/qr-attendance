@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 app.use(cookieParser());
 
-
+/*
 var whitelist = ['http://192.168.1.79:3000', 'localhost', 'https://qr-attendance.herokuapp.com/', '.'];
 
 app.use(
@@ -41,6 +41,7 @@ app.use(
     credentials: true
   })
 );
+*/
 
 var expiryDate = new Date(Date.now() + COOKIE_AGE); // 1 year
 app.use(session({
