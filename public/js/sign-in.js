@@ -37,6 +37,12 @@
         }
 
         if(check){
+            $.ajaxSetup({
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                }
+            });
             var objReg = {};
             objReg.name = $(name).val().trim();
             objReg.admin = $(admin).val().trim();

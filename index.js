@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser')
 var crypto_qr = require('./crypto-qr')
 const MongoClient = require('mongodb').MongoClient
 var session = require('cookie-session');
+var cors = require('cors');
 
 const DB_NAME = 'heroku_gxqkhrvd';
 const TIME_LIMIT = 15000;
@@ -13,12 +14,33 @@ const COOKIE_AGE = 365 * 60 * 60 * 1000;
 
 var app = express();
 
+app.enable('trust proxy');
 app.use(express.static('public/'));
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 app.use(cookieParser());
+
+
+var whitelist = ['http://192.168.1.79:3000', 'localhost', 'https://qr-attendance.herokuapp.com/', '.'];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if(origin){
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      }
+      else
+        callback(null, true)
+    },
+    credentials: true
+  })
+);
 
 var expiryDate = new Date(Date.now() + COOKIE_AGE); // 1 year
 app.use(session({
@@ -85,10 +107,10 @@ app.post('/get-qr-string', function(req, res)
     var objEn = {};
     objEn.name = req.body.name;
     objEn.datetime = Date.now();
-    var fullUrl = req.protocol + 's://' + req.get('host');
+    var fullUrl = req.protocol + '://' + req.get('host');
     //var strEn = "http://192.168.1.79:3000/signin?signin=" + crypto_qr.encrypt(JSON.stringify(objEn))
     var strEn = fullUrl + "/signin?signin=" + crypto_qr.encrypt(JSON.stringify(objEn));
-    console.log(strEn);
+    //console.log(strEn);
     res.send(strEn);
   }
   else
