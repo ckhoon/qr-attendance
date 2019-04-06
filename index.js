@@ -85,7 +85,10 @@ app.post('/get-qr-string', function(req, res)
     var objEn = {};
     objEn.name = req.body.name;
     objEn.datetime = Date.now();
-    var strEn = "http://192.168.1.79:3000/signin?signin=" + crypto_qr.encrypt(JSON.stringify(objEn))
+    var fullUrl = req.protocol + '://' + req.get('host');
+    //var strEn = "http://192.168.1.79:3000/signin?signin=" + crypto_qr.encrypt(JSON.stringify(objEn))
+    var strEn = fullUrl + "/signin?signin=" + crypto_qr.encrypt(JSON.stringify(objEn));
+    console.log(strEn);
     res.send(strEn);
   }
   else
