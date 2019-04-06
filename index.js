@@ -156,11 +156,32 @@ app.post('/register', function(req, res)
     req.session.signIn = objReg;
     res.cookie('userName', req.body.name, { maxAge: COOKIE_AGE, httpOnly: true });
     res.cookie('adminNo', req.body.admin, { maxAge: COOKIE_AGE, httpOnly: true });
-    res.status(200).end();
+    res.status(200).end("success");
   }
   else
   {
     res.status(500).send({ error: 'Something blew up - register' });
+  }
+});
+
+app.post('/update-db', function(req, res)
+{
+  if(req.body.lessonName && req.body.datetime &&
+    req.body.name && req.body.admin &&
+    req.body.geoLong && req.body.geoLat
+    ){
+      var objData = {};
+      var lessonName = req.body.lessonName;
+      objData.userName = req.body.name;
+      objData.adminNo = req.body.admin;
+      objData.datetime = req.body.datetime;
+      objData.geoLong = req.body.geoLong;
+      objData.geoLat = req.body.geoLat;
+
+      db.collection(lessonName).insertOne(objData, (err, result) => {
+        if (err) return console.log(err)
+        res.status(200).end("success");
+      })
   }
 });
 

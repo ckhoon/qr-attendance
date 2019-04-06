@@ -21,6 +21,8 @@
     [ Validate ]*/
     var name = $('.validate-input input[name="name"]');
     var admin = $('.validate-input input[name="admin"]');
+    //console.log($('#variable').attr("lessonName"));
+    //console.log($('#variable').attr("datetime"));
 
     $('.validate-form').on('submit',function(event){
         var check = true;
@@ -70,19 +72,51 @@
     }
     
     function getLocation(data, status) {
-        $('#loc').html("Successful");
-        
-        //if (navigator.geolocation) {
-        //    navigator.geolocation.getCurrentPosition(showPosition);
-        //} else { 
-        //    $('#loc').html("Geolocation is not supported by this browser.");
-        //}
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else { 
+            $('#variable').html("");
+            $('#loc').html("Geolocation is required !");
+        }
 
     }
 
     function showPosition(position) {
-        $('#loc').html("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
-    } 
+        var objData = {};
+
+        objData.lessonName = $('#variable').attr("lessonName");
+        objData.datetime = $('#variable').attr("datetime");
+        objData.geoLat = position.coords.latitude;
+        objData.geoLong = position.coords.longitude;
+        objData.name = $(name).val().trim();
+        objData.admin = $(admin).val().trim();
+    //$('#loc').html("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+        var posting = $.post( "/update-db", objData , updateUI);
+    }
+
+    function showError(error) {
+        $('#variable').html("");
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                $('#loc').html("User denied the request for Geolocation.")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                $('#loc').html("Location information is unavailable.")
+                break;
+            case error.TIMEOUT:
+                $('#loc').html("The request to get user location timed out.")
+                break;
+            case error.UNKNOWN_ERROR:
+                $('#loc').html("An unknown error occurred.")
+                break;
+        }
+    }
+
+    function updateUI(data, status)
+    {
+        $('#variable').html("");
+        $('#loc').html("Successful");
+    }
     
 
 })(jQuery);

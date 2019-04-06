@@ -13,39 +13,71 @@ head
             .wrap-create-lesson
               form.create-lesson-form.validate-form
                 if objSignIn.userName == undefined
-                    span.create-lesson-form-title
-                      | Register 
-                    .wrap-input3.validate-input(data-validate='Name is required')
-                      input.input3(type='text' name='name' placeholder='Enter your name')
-                      span.focus-input3
-                    .wrap-input3.validate-input(data-validate='Admin number is required')
-                      input.input3(type='text' name='admin' placeholder='Enter your admin number')
-                      span.focus-input3
-                    .container-create-lesson-form-btn
-                      button.create-lesson-form-btn
-                        | Submit
-                div.qr-display(id='loc')
+                    div(id='variable' lessonName=objSignIn.name datetime=objSignIn.datetime)
+                        span.create-lesson-form-title
+                          | Register 
+                        .wrap-input3.validate-input(data-validate='Name is required')
+                          input.input3(type='text' name='name' placeholder='Enter your name')
+                          span.focus-input3
+                        .wrap-input3.validate-input(data-validate='Admin number is required')
+                          input.input3(type='text' name='admin' placeholder='Enter your admin number')
+                          span.focus-input3
+                        .container-create-lesson-form-btn
+                          button.create-lesson-form-btn
+                            | Submit
+                span.create-lesson-form-title
+                    div(id='loc')
         script(type='text/javascript', src='js/jquery-3.2.1.min.js')
         script(type='text/javascript', src='js/popper.js')
         script(type='text/javascript', src='js/bootstrap.min.js')
         script(type='text/javascript', src='js/sign-in.js')
+
         if objSignIn.userName
             script(type='text/javascript').
                 $(document).ready(function(){
                     getLocation();
                 })
-                
+
                 function getLocation() {
-                    $('#loc').html("Successful");
-                    /*
                     if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(showPosition);
-                    } else { 
-                        $('#loc').html("Geolocation is not supported by this browser.");
+                        console.log("there");
+                        navigator.geolocation.getCurrentPosition(showPosition, showError);
+                    } else {
+                        console.log("here");
+                        $('#loc').html("Geolocation is required !");
                     }
-                    */
                 }
 
                 function showPosition(position) {
-                    $('#loc').html("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
-                }    
+                    var objData = {};
+
+                    objData.lessonName = '#{objSignIn.name}';
+                    objData.datetime = #{objSignIn.datetime};
+                    objData.geoLat = position.coords.latitude;
+                    objData.geoLong = position.coords.longitude;
+                    objData.name = '#{objSignIn.userName}';
+                    objData.admin = '#{objSignIn.adminNo}';
+                    var posting = $.post( "/update-db", objData , updateUI);
+                } 
+
+                function showError(error) {
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            $('#loc').html("User denied the request for Geolocation.")
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            $('#loc').html("Location information is unavailable.")
+                            break;
+                        case error.TIMEOUT:
+                            $('#loc').html("The request to get user location timed out.")
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            $('#loc').html("An unknown error occurred.")
+                            break;
+                    }
+                }
+
+                function updateUI(data, status)
+                {
+                    $('#loc').html("Successful");
+                }  

@@ -1,33 +1,20 @@
-html
-  head
-    title 
-    //link(rel='stylesheet', type='text/css', href='slick.css')
-    //link(rel='stylesheet', type='text/css', href='slick-theme.css')
-  body
-    script(type='text/javascript', src='https://code.jquery.com/jquery-3.3.1.min.js')
-    script(type="text/javascript" src="js/qrcode.js")
-    |Hello World
-    div(id='qr')
-    div(id='x')
-    script(type='text/javascript').
-      $(document).ready(function(){
-        var qr = qrcode(4, 'L');
-        qr.addData("test");
-        qr.make();
-        $('#qr').html(qr.createSvgTag({ cellSize: 5, margin: 0, xscalable: true }));
-        //$('#qr').html("hello again");
-        console.log($('qr').html);
-        getLocation();
-      })
-      
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else { 
-          $('#x').html("Geolocation is not supported by this browser.");
-        }
-      }
-
-      function showPosition(position) {
-        $('#x').html("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
-      }
+doctype html
+head
+    title QR-Attendance
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='icon' type='image/png' href='images/icons/favicon.ico')
+    link(rel='stylesheet' type='text/css' href='css/util.css')
+    link(rel='stylesheet' type='text/css' href='css/main.css')
+    link(rel='stylesheet' type='text/css' href='/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    body
+        script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+        script(type='text/javascript' src="js/qrcode.js")
+        .bg-create-lesson(style="background-image: url('images/tpBkGrd.jpg');")
+          .container-create-lesson
+            .wrap-qr-display
+                span.create-lesson-form-title
+                    | Error 101010. You should not see this page.
+        script(type='text/javascript', src='js/jquery-3.2.1.min.js')
+        script(type='text/javascript', src='js/popper.js')
+        script(type='text/javascript', src='js/bootstrap.min.js')
