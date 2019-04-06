@@ -1,0 +1,51 @@
+doctype html
+head
+    title Sign-In
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='icon' type='image/png' href='images/icons/favicon.ico')
+    link(rel='stylesheet' type='text/css' href='css/util.css')
+    link(rel='stylesheet' type='text/css' href='css/main.css')
+    link(rel='stylesheet' type='text/css' href='/fonts/font-awesome-4.7.0/css/font-awesome.min.css')
+    body
+        .bg-create-lesson(style="background-image: url('images/tpBkGrd.jpg');")
+          .container-create-lesson
+            .wrap-create-lesson
+              form.create-lesson-form.validate-form
+                if objSignIn.userName == undefined
+                    span.create-lesson-form-title
+                      | Register 
+                    .wrap-input3.validate-input(data-validate='Name is required')
+                      input.input3(type='text' name='name' placeholder='Enter your name')
+                      span.focus-input3
+                    .wrap-input3.validate-input(data-validate='Admin number is required')
+                      input.input3(type='text' name='admin' placeholder='Enter your admin number')
+                      span.focus-input3
+                    .container-create-lesson-form-btn
+                      button.create-lesson-form-btn
+                        | Submit
+                div.qr-display(id='loc')
+        script(type='text/javascript', src='js/jquery-3.2.1.min.js')
+        script(type='text/javascript', src='js/popper.js')
+        script(type='text/javascript', src='js/bootstrap.min.js')
+        script(type='text/javascript', src='js/sign-in.js')
+        if objSignIn.userName
+            script(type='text/javascript').
+                $(document).ready(function(){
+                    getLocation();
+                })
+                
+                function getLocation() {
+                    $('#loc').html("Successful");
+                    /*
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                    } else { 
+                        $('#loc').html("Geolocation is not supported by this browser.");
+                    }
+                    */
+                }
+
+                function showPosition(position) {
+                    $('#loc').html("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+                }    

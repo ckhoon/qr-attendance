@@ -587,6 +587,9 @@ textarea.input3 {
   line-height: 1.2;
 }
 
+/*==================================================================
+[ qr-attendance custom ]*/
+
 .qr-display {
   display: block;
   color: #fff;
@@ -595,6 +598,16 @@ textarea.input3 {
   padding-bottom: 50px;
 }
 
+.wrap-qr-display {
+  background: #80c64a;
+  background: -webkit-linear-gradient(45deg, #56ab2f, #a8e063);
+  background: -o-linear-gradient(45deg, #56ab2f, #a8e063);
+  background: -moz-linear-gradient(45deg, #56ab2f, #a8e063);
+  background: linear-gradient(45deg, #56ab2f, #a8e063);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 72px 55px 65px 55px;
+}
 
 
 
