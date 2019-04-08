@@ -73,7 +73,11 @@ app.get('/', function(req, res)
 
 app.get('/create-lesson', function(req, res)
 {
-  res.render('create-lesson');
+  if (req.query.lesson){
+    res.render('create-lesson', {lessonName: req.query.lesson});
+  }
+  else
+    res.render('create-lesson');
 });
 
 app.post('/create-lesson', function(req, res)
@@ -186,17 +190,6 @@ app.post('/update-db', function(req, res)
 });
 
 
-/*
-app.get('/signin', (req, res) => {
-  var myobj = { name: "Company Inc", address: "Highway 37" };
-  db.collection('test_collection').insertOne(myobj, (err, result) => {
-    if (err) return console.log(err)
-
-    console.log('saved to database')
-    res.redirect('/')
-  })
-});
-*/
 app.get('/query', (req, res) => {
   var cursor = db.collection('test_collection').find().toArray(function(err, results) {
     console.log(results)

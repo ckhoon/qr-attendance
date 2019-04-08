@@ -28,3 +28,10 @@ body
     script(type='text/javascript', src='js/popper.js')
     script(type='text/javascript', src='js/bootstrap.min.js')
     script(type='text/javascript', src='js/create-lesson.js')
+    if lessonName != undefined
+      script(type='text/javascript').
+        $(document).ready(function(){
+          var name = $('.validate-input input[name="name"]');
+          name.val('#{lessonName}');
+          $('.validate-form').submit();
+        });
