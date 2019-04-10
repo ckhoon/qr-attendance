@@ -3,47 +3,24 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
-var crypto_qr = require('./crypto-qr')
 const MongoClient = require('mongodb').MongoClient
 var session = require('cookie-session');
-var cors = require('cors');
+var crypto_qr = require('./crypto-qr')
 
-const DB_NAME = 'heroku_gxqkhrvd';
-const TIME_LIMIT = 15000;
-const COOKIE_AGE = 365 * 60 * 60 * 1000;
+const config = require('./config.json');
+const app_config = config.production;
 
 var app = express();
 
 app.enable('trust proxy');
 app.use(express.static('public/'));
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+app.use(bodyParser.json());       
+app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
 
-/*
-var whitelist = ['http://192.168.1.79:3000', 'localhost', 'https://qr-attendance.herokuapp.com/', '.'];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if(origin){
-        if (whitelist.indexOf(origin) !== -1) {
-          callback(null, true)
-        } else {
-          callback(new Error('Not allowed by CORS'))
-        }
-      }
-      else
-        callback(null, true)
-    },
-    credentials: true
-  })
-);
-*/
-
-var expiryDate = new Date(Date.now() + COOKIE_AGE); // 1 year
+var expiryDate = new Date(Date.now() + app_config.COOKIE_AGE);
 app.use(session({
   name: 'session',
   keys: ['key1abc', 'key2def'],
@@ -52,10 +29,9 @@ app.use(session({
     httpOnly: true,
     domain: 'qr-attendance',
     expires: expiryDate,
-    maxAge: COOKIE_AGE
+    maxAge: app_config.COOKIE_AGE
   }
 }))
-
 
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -82,19 +58,6 @@ app.get('/create-lesson', function(req, res)
 
 app.post('/create-lesson', function(req, res)
 {
-
-//code for checking collection exist.
-/*
-  db.collection('no_such').findOne({}, (err, result) => {
-    if (err){
-      return console.log(err);
-    }
-    if (result)
-      console.log(result);
-    else
-      console.log("nothing");
-  })
-*/
   db.createCollection(req.body.name, function(err, res) {
     if (err) {
       console.log("collection exist");
@@ -129,7 +92,7 @@ app.get('/signin', (req, res) => {
   }
 
   var objSignIn = JSON.parse(crypto_qr.decrypt(req.query.signin));
-  if( (Date.now() - objSignIn.datetime) > TIME_LIMIT){
+  if( (Date.now() - objSignIn.datetime) > app_config.TIME_LIMIT){
     res.status(500).send({ error: 'Time limit exceeded!' });
     return;
   }
@@ -158,8 +121,8 @@ app.post('/register', function(req, res)
     objReg.userName = req.body.name;
     objReg.adminNo = req.body.admin;
     req.session.signIn = objReg;
-    res.cookie('userName', req.body.name, { maxAge: COOKIE_AGE, httpOnly: true });
-    res.cookie('adminNo', req.body.admin, { maxAge: COOKIE_AGE, httpOnly: true });
+    res.cookie('userName', req.body.name, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
+    res.cookie('adminNo', req.body.admin, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
     res.status(200).end("success");
   }
   else
@@ -189,7 +152,6 @@ app.post('/update-db', function(req, res)
   }
 });
 
-
 app.get('/query', (req, res) => {
   var cursor = db.collection('test_collection').find().toArray(function(err, results) {
     console.log(results)
@@ -208,11 +170,11 @@ app.listen(server_port, function()
 //Other functions
 
 var db
-var db_uri = process.env.MONGODB_URI || "mongodb://heroku_gxqkhrvd:ep411nrco53m0f6fkvhrvprvis@ds147274.mlab.com:47274/heroku_gxqkhrvd";
+var db_uri = process.env.MONGODB_URI || app_config.DB_URI
 console.log(db_uri);
 MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
   if (err) return console.log(err)
-  db = client.db(DB_NAME) // whatever your database name is
+  db = client.db(app_config.DB_NAME) // whatever your database name is
 })
 
 //var objTest = {};
@@ -225,4 +187,15 @@ MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
 //console.log(en);
 //console.log(de);
 
-
+//code for checking collection exist.
+/*
+  db.collection('no_such').findOne({}, (err, result) => {
+    if (err){
+      return console.log(err);
+    }
+    if (result)
+      console.log(result);
+    else
+      console.log("nothing");
+  })
+*/

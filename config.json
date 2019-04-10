@@ -1,0 +1,16 @@
+{
+    "development": {
+        "config_id": "development",
+        "DB_URI": "mongodb://heroku_gxqkhrvd:ep411nrco53m0f6fkvhrvprvis@ds147274.mlab.com:47274/heroku_gxqkhrvd",
+        "DB_NAME": "heroku_gxqkhrvd",
+        "TIME_LIMIT": 15000,
+        "COOKIE_AGE": 108000000
+    },
+    "production": {
+        "config_id": "production",
+        "DB_URI": "mongodb://heroku_gxqkhrvd:ep411nrco53m0f6fkvhrvprvis@ds147274.mlab.com:47274/heroku_gxqkhrvd",
+        "DB_NAME": "heroku_gxqkhrvd",
+        "TIME_LIMIT": 15000,
+        "COOKIE_AGE": 108000000
+    }
+}

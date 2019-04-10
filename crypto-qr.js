@@ -3,6 +3,7 @@
 const crypto = require('crypto');
 //const algorithm = 'aes-256-cbc';
 const algorithm = 'aes-128-cbc';
+//random key everytime the server restart
 const key = crypto.randomBytes(16);
 
 function encrypt(text) {
