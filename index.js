@@ -147,7 +147,8 @@ app.post('/update-db', function(req, res)
 
       db.collection(lessonName).insertOne(objData, (err, result) => {
         if (err) return console.log(err)
-        res.status(200).end("success");
+        res.status(200).send(JSON.stringify(objData));
+        //res.status(200).end("success");
       })
   }
 });
