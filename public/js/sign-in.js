@@ -116,6 +116,15 @@
     {
         $('#variable').html("");
         $('#loc').html("Successful");
+        var result = JSON.parse(data);
+        strHtml = result.userName + " </br>";
+        strHtml += result.adminNo + " </br>";
+        strHtml += result.geoLat + " , ";
+        strHtml += result.geoLong + " </br>";
+        var dateIn = new Date();
+        dateIn.setTime(result.datetime);
+        strHtml += dateIn.toString();
+        $('#info').html(strHtml);
     }
     
 

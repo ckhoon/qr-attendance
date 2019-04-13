@@ -27,7 +27,7 @@ head
                             | Submit
                 span.create-lesson-form-title
                     div(id='loc')
-                    div.info-display(id='info')
+                div.info-display(id='info')
         script(type='text/javascript', src='js/jquery-3.2.1.min.js')
         script(type='text/javascript', src='js/popper.js')
         script(type='text/javascript', src='js/bootstrap.min.js')
@@ -81,5 +81,13 @@ head
                 function updateUI(data, status)
                 {
                     $('#loc').html("Successful");
-                    $('#info').html(data);
+                    var result = JSON.parse(data);
+                    strHtml = result.userName + " </br>";
+                    strHtml += result.adminNo + " </br>";
+                    strHtml += result.geoLat + " , ";
+                    strHtml += result.geoLong + " </br>";
+                    var dateIn = new Date();
+                    dateIn.setTime(result.datetime);
+                    strHtml += dateIn.toString();
+                    $('#info').html(strHtml);
                 }  
