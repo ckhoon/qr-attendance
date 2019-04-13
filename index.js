@@ -175,8 +175,9 @@ app.listen(server_port, function()
 //Other functions
 
 var db
-var db_uri = process.env.MONGODB_URI || app_config.DB_URI
-//console.log(db_uri);
+//var db_uri = process.env.MONGODB_URI || app_config.DB_URI
+var db_uri = app_config.DB_URI
+console.log(db_uri);
 MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
   if (err) return console.log(err)
   db = client.db(app_config.DB_NAME) // whatever your database name is
