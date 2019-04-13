@@ -81,13 +81,12 @@ head
                 function updateUI(data, status)
                 {
                     $('#loc').html("Successful");
-                    var result = JSON.parse(data);
-                    strHtml = result.userName + " </br>";
-                    strHtml += result.adminNo + " </br>";
-                    strHtml += result.geoLat + " , ";
-                    strHtml += result.geoLong + " </br>";
+                    strHtml = data.userName + " </br>";
+                    strHtml += data.adminNo + " </br>";
+                    strHtml += data.geoLat + " , ";
+                    strHtml += data.geoLong + " </br>";
                     var dateIn = new Date();
-                    dateIn.setTime(result.datetime);
+                    dateIn.setTime(data.datetime);
                     strHtml += dateIn.toString();
                     $('#info').html(strHtml);
                 }  

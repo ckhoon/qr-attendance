@@ -99,13 +99,13 @@ app.get('/signin', (req, res) => {
 
   if (req.session.signIn)
   {
-    console.log(req.session.signIn);
+    //console.log(req.session.signIn);
     objSignIn.userName = req.session.signIn.userName;
     objSignIn.adminNo = req.session.signIn.adminNo;   
   }
   else if(req.cookies.userName)
   {
-    console.log(req.cookies.userName);
+    //console.log(req.cookies.userName);
     objSignIn.userName = req.cookies.userName;
     objSignIn.adminNo = req.cookies.adminNo;       
   }
@@ -138,16 +138,20 @@ app.post('/update-db', function(req, res)
     req.body.geoLong && req.body.geoLat
     ){
       var objData = {};
+      var dateIn = new Date();
+      dateIn.setTime(req.body.datetime);
       var lessonName = req.body.lessonName;
       objData.userName = req.body.name;
       objData.adminNo = req.body.admin;
-      objData.datetime = req.body.datetime;
+      objData.datetime = dateIn;
       objData.geoLong = req.body.geoLong;
       objData.geoLat = req.body.geoLat;
 
       db.collection(lessonName).insertOne(objData, (err, result) => {
         if (err) return console.log(err)
-        res.status(200).send(JSON.stringify(objData));
+        objData.datetime = req.body.datetime;
+        res.status(200).send(objData);
+        //res.status(200).send(JSON.stringify(objData));
         //res.status(200).end("success");
       })
   }
@@ -172,7 +176,7 @@ app.listen(server_port, function()
 
 var db
 var db_uri = process.env.MONGODB_URI || app_config.DB_URI
-console.log(db_uri);
+//console.log(db_uri);
 MongoClient.connect(db_uri, { useNewUrlParser: true }, (err, client) => {
   if (err) return console.log(err)
   db = client.db(app_config.DB_NAME) // whatever your database name is
