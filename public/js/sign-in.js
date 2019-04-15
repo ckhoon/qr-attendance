@@ -116,7 +116,7 @@
     {
         $('#variable').html("");
         $('#loc').html("Successful");
-        strHtml = data.userName + " </br>";
+        var strHtml = data.userName + " </br>";
         strHtml += data.adminNo + " </br>";
         strHtml += data.geoLat + " , ";
         strHtml += data.geoLong + " </br>";

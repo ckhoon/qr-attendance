@@ -123,7 +123,13 @@ app.post('/register', function(req, res)
     req.session.signIn = objReg;
     res.cookie('userName', req.body.name, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
     res.cookie('adminNo', req.body.admin, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
-    res.status(200).end("success");
+
+    objReg.dateSignUp = Date.now();
+
+    db.collection(app_config.SIGN_UP_COLLECTION).insertOne(objReg, (err, result) => {
+      if (err) return console.log(err)
+      res.status(200).end("success");
+    })
   }
   else
   {

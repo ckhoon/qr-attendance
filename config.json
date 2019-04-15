@@ -3,6 +3,7 @@
         "config_id": "development",
         "DB_URI": "mongodb://heroku_gxqkhrvd:ep411nrco53m0f6fkvhrvprvis@ds147274.mlab.com:47274/heroku_gxqkhrvd",
         "DB_NAME": "heroku_gxqkhrvd",
+        "SIGN_UP_COLLECTION": "signup",
         "TIME_LIMIT": 15000,
         "COOKIE_AGE": 108000000
     },
@@ -10,6 +11,7 @@
         "config_id": "production",
         "DB_URI": "mongodb+srv://ckhoon:Supercell1@ckhoonmongocluster-lvuvk.mongodb.net/attendance",
         "DB_NAME": "attendance",
+        "SIGN_UP_COLLECTION": "signup",
         "TIME_LIMIT": 15000,
         "COOKIE_AGE": 108000000
     }
