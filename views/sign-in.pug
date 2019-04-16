@@ -58,7 +58,7 @@ head
                     objData.geoLong = position.coords.longitude;
                     objData.name = '#{objSignIn.userName}';
                     objData.admin = '#{objSignIn.adminNo}';
-                    var posting = $.post( "/update-db", objData , updateUI);
+                    var posting = $.post( "/update-db", objData , updateUI).fail(updateUIFail);
                 } 
 
                 function showError(error) {
@@ -89,4 +89,10 @@ head
                     dateIn.setTime(data.datetime);
                     strHtml += dateIn.toString();
                     $('#info').html(strHtml);
+                }  
+
+                function updateUIFail(response)
+                {
+                    $('#loc').html("Fail");
+                    $('#info').html(response.responseText);
                 }  

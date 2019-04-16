@@ -153,13 +153,29 @@ app.post('/update-db', function(req, res)
       objData.geoLong = req.body.geoLong;
       objData.geoLat = req.body.geoLat;
 
-      db.collection(lessonName).insertOne(objData, (err, result) => {
-        if (err) return console.log(err)
-        objData.datetime = req.body.datetime;
-        res.status(200).send(objData);
-        //res.status(200).send(JSON.stringify(objData));
-        //res.status(200).end("success");
-      })
+      var query = { adminNo: objData.adminNo };
+      var mysort = { datetime: -1 };
+      db.collection(lessonName).find(query).sort(mysort).toArray(function(err, result) {
+        if (err) throw err;
+        if(result)
+          if(result[0])
+            if((objData.datetime - result[0].datetime) < (1000 * 60 * 3))
+            {
+              res.status(500).send("Entry found!");
+              //console.log("too fast");
+              return;
+            }
+
+        db.collection(lessonName).insertOne(objData, (err, result) => {
+          if (err) return console.log(err)
+          objData.datetime = req.body.datetime;
+          res.status(200).send(objData);
+          //res.status(200).send(JSON.stringify(objData));
+          //res.status(200).end("success");
+        })        
+      });
+
+
   }
 });
 
