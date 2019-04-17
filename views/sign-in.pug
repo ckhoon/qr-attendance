@@ -41,10 +41,9 @@ head
 
                 function getLocation() {
                     if (navigator.geolocation) {
-                        console.log("there");
+                        $('#loc').html("Loading...");
                         navigator.geolocation.getCurrentPosition(showPosition, showError);
                     } else {
-                        console.log("here");
                         $('#loc').html("Geolocation is required !");
                     }
                 }

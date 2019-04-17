@@ -124,7 +124,8 @@ app.post('/register', function(req, res)
     res.cookie('userName', req.body.name, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
     res.cookie('adminNo', req.body.admin, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
 
-    objReg.dateSignUp = Date.now();
+    var dateSignUp = new Date();
+    objReg.dateSignUp = dateSignUp;
 
     db.collection(app_config.SIGN_UP_COLLECTION).insertOne(objReg, (err, result) => {
       if (err) return console.log(err)
@@ -159,7 +160,7 @@ app.post('/update-db', function(req, res)
         if (err) throw err;
         if(result)
           if(result[0])
-            if((objData.datetime - result[0].datetime) < (1000 * 60 * 3))
+            if((objData.datetime - result[0].datetime) < (1000 * 60 * 10))
             {
               res.status(500).send("Entry found!");
               //console.log("too fast");
@@ -174,8 +175,6 @@ app.post('/update-db', function(req, res)
           //res.status(200).end("success");
         })        
       });
-
-
   }
 });
 

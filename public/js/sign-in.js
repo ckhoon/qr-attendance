@@ -73,6 +73,8 @@
     
     function getLocation(data, status) {
         if (navigator.geolocation) {
+            $('#variable').html("");
+            $('#loc').html("Loading...");
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else { 
             $('#variable').html("");
@@ -90,7 +92,6 @@
         objData.geoLong = position.coords.longitude;
         objData.name = $(name).val().trim();
         objData.admin = $(admin).val().trim();
-    //$('#loc').html("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
         var posting = $.post( "/update-db", objData , updateUI);
     }
 
