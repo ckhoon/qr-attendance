@@ -101,13 +101,17 @@ app.get('/signin', (req, res) => {
   {
     //console.log(req.session.signIn);
     objSignIn.userName = req.session.signIn.userName;
-    objSignIn.adminNo = req.session.signIn.adminNo;   
+    objSignIn.adminNo = req.session.signIn.adminNo;
+    req.session.signIn.userName = objSignIn.userName;
+    req.session.signIn.adminNo = objSignIn.adminNo;
   }
   else if(req.cookies.userName)
   {
     //console.log(req.cookies.userName);
     objSignIn.userName = req.cookies.userName;
-    objSignIn.adminNo = req.cookies.adminNo;       
+    objSignIn.adminNo = req.cookies.adminNo;  
+    res.cookie('userName', objSignIn.userName, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
+    res.cookie('adminNo', objSignIn.adminNo, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
   }
 
   res.render('sign-in', {'objSignIn' : objSignIn});

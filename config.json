@@ -5,7 +5,7 @@
         "DB_NAME": "heroku_gxqkhrvd",
         "SIGN_UP_COLLECTION": "signup",
         "TIME_LIMIT": 15000,
-        "COOKIE_AGE": 108000000
+        "COOKIE_AGE": 31536000000
     },
     "production": {
         "config_id": "production",
@@ -13,6 +13,6 @@
         "DB_NAME": "attendance",
         "SIGN_UP_COLLECTION": "signup",
         "TIME_LIMIT": 15000,
-        "COOKIE_AGE": 108000000
+        "COOKIE_AGE": 31536000000
     }
 }
