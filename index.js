@@ -113,6 +113,7 @@ app.get('/signin', (req, res) => {
     res.cookie('userName', objSignIn.userName, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
     res.cookie('adminNo', objSignIn.adminNo, { maxAge: app_config.COOKIE_AGE, httpOnly: true });
   }
+  objSignIn.agent = req.header('user-agent');
 
   res.render('sign-in', {'objSignIn' : objSignIn});
 

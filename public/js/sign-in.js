@@ -92,6 +92,7 @@
         objData.geoLong = position.coords.longitude;
         objData.name = $(name).val().trim();
         objData.admin = $(admin).val().trim();
+        objData.agent = $('#variable').attr("agent");
         var posting = $.post( "/update-db", objData , updateUI);
     }
 

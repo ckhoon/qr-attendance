@@ -57,6 +57,7 @@ head
                     objData.geoLong = position.coords.longitude;
                     objData.name = '#{objSignIn.userName}';
                     objData.admin = '#{objSignIn.adminNo}';
+                    objData.agent = '#{objSignIn.agent}';
                     var posting = $.post( "/update-db", objData , updateUI).fail(updateUIFail);
                 } 
 
