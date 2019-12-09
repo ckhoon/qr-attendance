@@ -147,7 +147,8 @@ app.post('/update-db', function(req, res)
 {
   if(req.body.lessonName && req.body.datetime &&
     req.body.name && req.body.admin &&
-    req.body.geoLong && req.body.geoLat
+    req.body.geoLong && req.body.geoLat &&
+    req.body.agent
     ){
       var objData = {};
       var dateIn = new Date();
@@ -158,6 +159,7 @@ app.post('/update-db', function(req, res)
       objData.datetime = dateIn;
       objData.geoLong = req.body.geoLong;
       objData.geoLat = req.body.geoLat;
+      objData.agent = req.body.agent;
 
       var query = { adminNo: objData.adminNo };
       var mysort = { datetime: -1 };
