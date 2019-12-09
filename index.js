@@ -93,7 +93,7 @@ app.get('/signin', (req, res) => {
 
   var objSignIn = JSON.parse(crypto_qr.decrypt(req.query.signin));
   if( (Date.now() - objSignIn.datetime) > app_config.TIME_LIMIT){
-    res.status(500).send({ error: 'Time limit exceeded!' });
+    res.status(500).send({ error: 'QR code expired!' });
     return;
   }
 
@@ -182,6 +182,34 @@ app.post('/update-db', function(req, res)
           //res.status(200).end("success");
         })        
       });
+  }
+  else
+  {
+    var strErr = "";
+
+    if(req.body.lessonName)
+    else
+      strErr += "lesson name ";
+    if(req.body.datetime)
+    else
+      strErr += "datetime ";
+    if(req.body.name)
+    else
+      strErr += "name ";
+    if(req.body.admin)
+    else
+      strErr += "admin ";
+    if(req.body.geoLong)
+    else
+      strErr += "geoLong ";
+    if(req.body.geoLat)
+    else
+      strErr += "geoLat ";
+    if(req.body.agent)
+    else
+      strErr += "agent ";
+
+    res.status(500).send(strErr + "information missing..");
   }
 });
 

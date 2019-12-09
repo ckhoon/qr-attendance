@@ -88,12 +88,12 @@
 
         objData.lessonName = $('#variable').attr("lessonName");
         objData.datetime = $('#variable').attr("datetime");
+        objData.agent = $('#variable').attr("agent");
         objData.geoLat = position.coords.latitude;
         objData.geoLong = position.coords.longitude;
         objData.name = $(name).val().trim();
         objData.admin = $(admin).val().trim();
-        objData.agent = $('#variable').attr("agent");
-        var posting = $.post( "/update-db", objData , updateUI);
+        var posting = $.post( "/update-db", objData , updateUI).fail(updateUIFail);
     }
 
     function showError(error) {
@@ -127,6 +127,11 @@
         strHtml += dateIn.toString();
         $('#info').html(strHtml);
     }
-    
+
+    function updateUIFail(response)
+    {
+        $('#loc').html("Fail");
+        $('#info').html(response.responseText);
+    }      
 
 })(jQuery);

@@ -13,7 +13,7 @@ head
             .wrap-create-lesson
               form.create-lesson-form.validate-form
                 if objSignIn.userName == undefined
-                    div(id='variable' lessonName=objSignIn.name datetime=objSignIn.datetime)
+                    div(id='variable' lessonName=objSignIn.name datetime=objSignIn.datetime agent=objSignIn.agent)
                         span.create-lesson-form-title
                           | Register 
                         .wrap-input3.validate-input(data-validate='Name is required')
