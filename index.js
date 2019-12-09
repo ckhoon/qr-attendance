@@ -187,26 +187,19 @@ app.post('/update-db', function(req, res)
   {
     var strErr = "";
 
-    if(req.body.lessonName)
-    else
+    if(!req.body.lessonName)
       strErr += "lesson name ";
-    if(req.body.datetime)
-    else
+    if(!req.body.datetime)
       strErr += "datetime ";
-    if(req.body.name)
-    else
+    if(!req.body.name)
       strErr += "name ";
-    if(req.body.admin)
-    else
+    if(!req.body.admin)
       strErr += "admin ";
-    if(req.body.geoLong)
-    else
+    if(!req.body.geoLong)
       strErr += "geoLong ";
-    if(req.body.geoLat)
-    else
+    if(!req.body.geoLat)
       strErr += "geoLat ";
-    if(req.body.agent)
-    else
+    if(!req.body.agent)
       strErr += "agent ";
 
     res.status(500).send(strErr + "information missing..");
