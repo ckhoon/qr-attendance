@@ -111,6 +111,9 @@
             case error.UNKNOWN_ERROR:
                 $('#loc').html("An unknown error occurred.")
                 break;
+            default:
+                $('#loc').html("An unknown error occurred.")
+                break;                
         }
     }
 
